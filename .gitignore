@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.coverage
+.coverage.*
+*.pyc
+.DS_Store
+
+# Your own sessions ship their audit output here. The committed audit.jsonl /
+# prompts.jsonl / reports/session-sample.md are sanitized samples from a real
+# session, kept deliberately as evidence.
+.claude/audit/reports/*
+!.claude/audit/reports/session-sample.md

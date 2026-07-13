@@ -1,0 +1,101 @@
+{
+  "//": "AI-SDLC governance config. NOTE: JSON has no real comments, so rationale lives in these '//' keys (unknown keys are ignored by Claude Code) and in .claude/hooks/README.md.",
+  "//permissionMode": "permissions.defaultMode = 'default' is deliberate. This is a GOVERNANCE setup: the deny-list + PreToolUse hooks are the hard guardrails, and 'default' keeps a human in the loop for everything not explicitly allow-listed (the gray zone). We do NOT use 'acceptEdits' (would auto-run file writes) or 'bypassPermissions' (would skip the very checks this config exists to enforce). Note: hooks fire regardless of mode, so validate-bash / check-secrets / scope-guard still block even if a command were allow-listed.",
+  "permissions": {
+    "defaultMode": "default",
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(rm -fr:*)",
+      "Bash(rm -r -f:*)",
+      "Bash(sudo rm:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(mkfs:*)",
+      "Bash(dd:*)",
+      "Bash(chmod -R 777:*)"
+    ],
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(wc:*)",
+      "Bash(pwd)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(ruff check:*)",
+      "Bash(pytest:*)",
+      "Bash(python3 -m unittest:*)",
+      "Bash(npm run:*)",
+      "Bash(npx ng build:*)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)"
+    ]
+  },
+  "//hooks": "Four event types are wired. PreToolUse: validate-bash (Bash) + check-secrets & scope-guard (Write|Edit|MultiEdit) can DENY via exit 2. PostToolUse: audit-log records every executed action. UserPromptSubmit: log-prompt records each prompt. Stop: session-report writes the summary. $CLAUDE_PROJECT_DIR is the repo root.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate-bash.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/check-secrets.py\""
+          },
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/scope-guard.sh\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/audit-log.sh\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/log-prompt.sh\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-report.sh\""
+          }
+        ]
+      }
+    ]
+  }
+}

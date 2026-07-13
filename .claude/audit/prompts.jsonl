@@ -1,0 +1,3 @@
+{"timestamp": "2026-07-08T17:12:13.405311+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: fix /doctor issue>"}
+{"timestamp": "2026-07-08T17:13:47.591718+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: log to updates.md>"}
+{"timestamp": "2026-07-08T17:14:48.560404+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: run guardrail demo>"}

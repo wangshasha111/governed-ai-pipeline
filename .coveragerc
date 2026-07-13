@@ -1,0 +1,8 @@
+# The hooks under test run as subprocesses (that's how Claude Code invokes them),
+# so coverage has to follow the fork: `parallel` writes one data file per process
+# and pytest-cov combines them at the end. The subprocesses only start measuring
+# when COVERAGE_PROCESS_START points at this file — see the pytest command in
+# README.md.
+[run]
+parallel = true
+source = .claude/hooks
