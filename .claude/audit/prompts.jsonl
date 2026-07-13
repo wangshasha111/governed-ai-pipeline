@@ -1,3 +1,6 @@
 {"timestamp": "2026-07-08T17:12:13.405311+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: fix /doctor issue>"}
 {"timestamp": "2026-07-08T17:13:47.591718+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: log to updates.md>"}
 {"timestamp": "2026-07-08T17:14:48.560404+00:00", "session_id": "<SESSION>", "cwd": "<REPO>", "prompt": "<demo prompt: run guardrail demo>"}
+{"timestamp": "2026-07-13T17:13:04.747542+00:00", "session_id": "<SHIP-SESSION>", "cwd": "<REPO>", "prompt": "/ship"}
+{"timestamp": "2026-07-13T17:14:43.292009+00:00", "session_id": "<SHIP-SESSION>", "cwd": "<REPO>", "prompt": "用 conda 的 pici 环境跑test"}
+{"timestamp": "2026-07-13T17:15:16.532489+00:00", "session_id": "<SHIP-SESSION>", "cwd": "<REPO>", "prompt": "对，三件事都做，然后重跑 /ship"}

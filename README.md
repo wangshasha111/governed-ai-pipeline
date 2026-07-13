@@ -28,7 +28,7 @@ Week 3 assignment — *Claude Code: AI-Augmented Software Engineering*.
 | [`docs/roi-report.md`](docs/roi-report.md) | Before/after measurements, weekly savings, projected annual ROI |
 | [`docs/governance-playbook.md`](docs/governance-playbook.md) | 6-week rollout plan for a 10-person team |
 | [`REPORT.md`](REPORT.md) | Written answers to all 12 assignment questions |
-| [`tests/test_hooks.py`](tests/test_hooks.py) | 41 tests driving every hook the way Claude Code does |
+| [`tests/test_hooks.py`](tests/test_hooks.py) | 50 tests driving every hook the way Claude Code does |
 
 ## Try it
 
@@ -37,12 +37,12 @@ git clone https://github.com/wangshasha111/governed-ai-pipeline
 cd governed-ai-pipeline
 pip install -r requirements-dev.txt
 
-# Run the guard suite (41 tests). COVERAGE_PROCESS_START lets coverage follow the
+# Run the guard suite (50 tests). COVERAGE_PROCESS_START lets coverage follow the
 # hooks into their subprocesses — see .coveragerc.
 COVERAGE_PROCESS_START="$PWD/.coveragerc" pytest tests -q --cov --cov-report=term-missing
 ```
 
-Expected: **41 passed**, ~89% coverage on the two Python guards.
+Expected: **50 passed**, ~89% coverage on the two Python guards.
 
 To use the pipeline itself, open Claude Code in this directory and run `/onboard`, or
 stage a change and run `/review`. The hooks load at session start — Claude Code will ask
