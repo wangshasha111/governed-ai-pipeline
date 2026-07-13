@@ -67,6 +67,11 @@ DANGEROUS = [
     # Force push.
     (re.compile(r"git\s+push\b(?!.*--force-with-lease)(?=.*(?:--force\b|\s-f\b|\s\+\w))", re.I),
      "git push --force (use --force-with-lease if you truly need it)"),
+    # Local history/worktree destruction — uncommitted work is unrecoverable.
+    (re.compile(r"git\s+reset\b[^|;&]*--hard", re.I),
+     "git reset --hard (discards uncommitted work irreversibly)"),
+    (re.compile(r"git\s+clean\b(?=[^|;&]*-\w*f)", re.I),
+     "git clean -f (deletes untracked files irreversibly)"),
     # Filesystem creation / disk overwrite.
     (re.compile(r"\bmkfs(\.\w+)?\b", re.I), "mkfs (formats a filesystem)"),
     (re.compile(r"\bdd\b[^|;&]*\bof=/dev/", re.I), "dd writing to a raw device"),
